@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Question
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -14,12 +15,14 @@ def detail(request, question_id):
     context = {'question': question}
     return render(request, 'myapp/question_detail.html', context)
 
+@login_required(login_url='common:login')
 def answer_create(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    question.answer_set.create(content=request.POST.get('content'), create_date=timezone.now())
+    question.answer_set.create(author=request.user, content=request.POST.get('content'), create_date=timezone.now())
     return redirect('detail', question_id=question_id)
 
+@login_required(login_url='common:login')
 def question_create(request):
-    q = Question(subject=request.POST.get('subject'), content=request.POST.get('content'), create_date=timezone.now())
+    q = Question(author=request.user, subject=request.POST.get('subject'), content=request.POST.get('content'), create_date=timezone.now())
     q.save()
     return redirect('list')

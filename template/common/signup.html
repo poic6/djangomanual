@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        <a href="{% url 'common:login' %}">로그인 하러가기</a>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {% include "form_errors.html" %}
+        <div class="mt-2">
+            <input type="text" class="form-control" name="username" id="username" placeholder="아이디" value="{{form.username.value|default_if_none:''}}">
+        </div>
+        <div class="mt-2">
+            <input type="password" class="form-control" name="password1" id="password1" placeholder="비밀번호" value="{{form.password1.value|default_if_none:''}}">
+        </div>
+        <div class="mt-2">
+            <input type="password" class="form-control" name="password2" id="password2" placeholder="비밀번호 확인" value="{{form.password2.value|default_if_none:''}}">
+        </div>
+        <div class="mt-2">
+            <input type="text" class="form-control" name="email" id="email" placeholder="이메일" value="{{form.email.value|default_if_none:''}}">
+        </div>
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">회원 등록하기</button>
+        </div>
+    </form>
+{% endblock %}

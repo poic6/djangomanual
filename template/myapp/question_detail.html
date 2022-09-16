@@ -3,6 +3,7 @@
 <h4 class="fw-bold mb-0">{{question.subject}}</h4>
 <div class="text-muted">
     <small>{{question.create_date}}</small>
+    <small>{{question.author.username}}</small>
 </div>
 <div>
     {{question.content}}
@@ -11,7 +12,10 @@
 <h6>{{question.answer_set.count}}개의 답변이 있습니다.</h6>
 {% for answer in question.answer_set.all %}
 <div class="card card-body mt-1">
-    <div class="text-muted"><small>{{answer.create_date}}</small></div>
+    <div class="text-muted">
+        <small>{{answer.create_date}}</small>
+        <small>{{answer.author.username}}</small>
+    </div>
     <div>{{answer.content}}</div>
 </div>
 {% endfor %}
@@ -20,7 +24,7 @@
 <form action="{% url 'answer_create' question.id %}" method="post">
     {% csrf_token %}
     <div>
-        <textarea name="content" id="content" rows="15" class="form-control" placeholder=" 답변내용"></textarea>
+        <textarea name="content" id="content" rows="15" class="form-control" placeholder=" 답변내용" {% if not user.is_authenticated %}disabled{% endif %}></textarea>
     </div>
     <div class="mt-1">
         <input type="submit" value="답변등록" class="btn btn-primary">
