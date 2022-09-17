@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h5>질문수정</h5>
+<form action="{% url 'myapp:question_modify_go' %}" method="post">
+    {% csrf_token %}
+    <div>
+        <input type="text" id="id" name="id" value="{{question.id}}">
+    </div>
+    <div>
+        <input type="text" id="subject" name="subject" placeholder="제목" class="form-control" value="{{question.subject}}">
+    </div>
+    <div class="mt-1">
+        <textarea name="content" id="content" rows="15" placeholder="내용" class="form-control" value="{{question.content}}"></textarea>
+    </div>
+    <div class="mt-1">
+        <input type="submit" value="질문등록" class="btn btn-primary">
+    </div>
+</form>
+{% endblock %}

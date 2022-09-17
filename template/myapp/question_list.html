@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h5>질문등록</h5>
-<form action="{% url 'question_create' %}" method="post">
+<form action="{% url 'myapp:question_create' %}" method="post">
     {% csrf_token %}
     <div>
         <input type="text" id="subject" name="subject" placeholder="제목" class="form-control">
@@ -20,7 +20,7 @@
     <div class="card card-body mt-1">
         <div>{{forloop.counter}}</div>
         <div>
-            <a href="{% url 'detail' question.id %}">{{question.subject}}</a>
+            <a href="{% url 'myapp:detail' question.id %}">{{question.subject}}</a>
         </div>
         <div class="text-muted">
             <small>{{question.create_date}}</small>
